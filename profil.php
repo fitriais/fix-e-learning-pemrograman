@@ -176,8 +176,8 @@
     $name = $user['name'];
     $email = $user['email'];
   } else {
-    $name = "Data tidak ditemukan";
-    $email = "Data tidak ditemukan";
+    $name = "coba";
+    $email = "coba@gmail.com";
   }
 
   $conn->close();
