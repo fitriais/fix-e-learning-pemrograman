@@ -137,7 +137,6 @@
 
 <div class="container">
   <div class="profile-section">
-    <h2>Profil Pengguna</h2>
 
     <!-- Foto Profil -->
     <div class="text-center">
@@ -149,22 +148,57 @@
       <p>FOTO PROFIL</p>
       <input type="file" id="imageInput" accept="image/*" class="form-control mb-3" />
     </div>
+    
+    </style>
+</head>
 
-    <!-- Formulir Informasi Pengguna -->
+<body>
+  <?php
+  // Koneksi ke database
+  $host = "localhost";
+  $username = "root";
+  $password = ""; // Ganti jika ada password
+  $database = "aifycode"; // Nama database Anda
+  $conn = new mysqli($host, $username, $password, $database);
+
+  // Periksa koneksi
+  if ($conn->connect_error) {
+    die("<p>Koneksi gagal: " . $conn->connect_error . "</p>");
+  }
+
+  // Ambil data pengguna berdasarkan ID
+  $userId = 1; // Ganti dengan ID pengguna yang sesuai
+  $query = "SELECT name, email FROM user WHERE id = $userId";
+  $result = $conn->query($query);
+
+  if ($result->num_rows > 0) {
+    $user = $result->fetch_assoc();
+    $name = $user['name'];
+    $email = $user['email'];
+  } else {
+    $name = "Data tidak ditemukan";
+    $email = "Data tidak ditemukan";
+  }
+
+  $conn->close();
+  ?>
+
     <div class="mb-3">
-      <label for="emailInput" class="form-label">EMAIL</label>
-      <input type="email" class="form-control" id="emailInput" placeholder="Alamat Email">
+      <label for="emailInput" class="form-label">Email</label>
+      <input type="email" class="form-control" id="emailInput" placeholder="Email" value="<?php echo $email; ?>" readonly />
     </div>
     <div class="mb-3">
-      <label for="nameInput" class="form-label">NAMA</label>
-      <input type="text" class="form-control" id="nameInput" placeholder="Nama Lengkap">
-    </div>
-    <div class="mb-3">
-      <label for="packageInput" class="form-label">PAKET</label>
-      <input type="text" class="form-control" id="packageInput" placeholder="Paket Anda">
+      <label for="nameInput" class="form-label">Nama Lengkap</label>
+      <input type="text" class="form-control" id="nameInput" placeholder="Nama Lengkap" value="<?php echo $name; ?>" readonly />
     </div>
   </div>
-</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
+
+
 
 <script>
   const imageInput = document.getElementById("imageInput");
